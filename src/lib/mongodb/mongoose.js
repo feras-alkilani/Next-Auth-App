@@ -4,19 +4,21 @@ let initialized = false;
 
 export const connect = async () => {
   mongoose.set("strictQuery", true);
+
   if (initialized) {
-    console.log("MongoDB is already connected");
+    console.log("MongoDB already connected");
     return;
   }
+
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
       dbName: "next-auth-app",
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
+    console.log("MongoDB connected");
     initialized = true;
-    console.log("MongoDB connected successfully");
   } catch (error) {
-    console.log("Failed to connect to MongoDB", error);
+    console.log("MongoDB connection error:", error);
   }
 };
